@@ -1,0 +1,15 @@
+plugins {
+    id 'java-library'
+}
+
+apply from: file("../common.gradle")
+
+tasks.withType(JavaCompile) { // compile-time options [javac <options> <sources>]
+    options.compilerArgs << '-Xlint:unchecked'
+    options.encoding = 'UTF-8'
+    options.release = 8
+}
+
+dependencies {
+    implementation project(path: ':game-assets')
+}
