@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Cross-platform-template.desktop" options="-Xlint:unchecked" />
+      <module name="Cross-platform-template.desktop.main" options="-Xlint:unchecked" />
+      <module name="Cross-platform-template.desktop.test" options="-Xlint:unchecked" />
+      <module name="Cross-platform-template.game" options="-Xlint:unchecked" />
+      <module name="Cross-platform-template.game.main" options="-Xlint:unchecked" />
+      <module name="Cross-platform-template.game.test" options="-Xlint:unchecked" />
+    </option>
+  </component>
+</project>

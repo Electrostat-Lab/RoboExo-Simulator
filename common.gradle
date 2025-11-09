@@ -1,4 +1,11 @@
 dependencies {
-    implementation "org.jmonkeyengine:jme3-core:3.6.0-beta3"
-    implementation "org.jmonkeyengine:jme3-effects:3.6.0-beta3"
+    implementation "org.jmonkeyengine:jme3-core:3.8.1-stable"
+    implementation "org.jmonkeyengine:jme3-effects:3.8.1-stable"
+    implementation "org.jmonkeyengine:jme3-plugins:3.8.1-stable"
+
+    implementation "io.github.software-hardware-codesign:articular-es:1.0.0-alpha"
+    implementation "io.github.software-hardware-codesign:jector-monkey:1.0.0-pre-alpha"
+    implementation "io.github.software-hardware-codesign:automata4j:1.0.0-beta"
+    implementation "com.github.stephengold:Minie:9.0.1"
+
 }

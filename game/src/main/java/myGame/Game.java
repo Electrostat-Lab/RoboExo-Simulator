@@ -1,6 +1,9 @@
 package myGame;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.math.Vector3f;
 
 import gameLogic.Scene;
 
@@ -18,5 +21,13 @@ public class Game extends SimpleApplication {
         flyCam.setMoveSpeed(0.5f);
 
         stateManager.attach(new Scene());
+
+        BulletAppState bulletAppState = new BulletAppState();
+        stateManager.attach(bulletAppState);
+
+        bulletAppState.setDebugEnabled(true); // default=false
+        PhysicsSpace space = bulletAppState.getPhysicsSpace();
+
+        space.setGravity(Vector3f.ZERO);
     }
 }

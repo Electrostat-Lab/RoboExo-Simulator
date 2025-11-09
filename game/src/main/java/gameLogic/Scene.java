@@ -1,60 +1,62 @@
 package gameLogic;
 
-import com.jme3.anim.AnimComposer;
 import com.jme3.app.Application;
-import com.jme3.app.LegacyApplication;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
+import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.collision.shapes.MeshCollisionShape;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.input.ChaseCamera;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
-import com.jme3.texture.Texture;
 
 public class Scene extends BaseAppState {
 
-    private Spatial dataBaseStack;
+    private Node humanoid;
     private static final float ENV_TIME = 0.5f;
     private float timer=0.0f;
 
     @Override
     protected void initialize(Application app) {
-        dataBaseStack = app.getAssetManager().loadModel("assets/Models/Database.j3o");
-        dataBaseStack.setLocalScale(0.6f);
-        dataBaseStack.setName("DataBaseStackModel");
+        humanoid = (Node) app.getAssetManager().loadModel("assets/Models/skeleton.glb");
 
-        Material material = new Material(app.getAssetManager(),"Common/MatDefs/Light/PBRLighting.j3md");
-        /*metalness , max is 1*/
-        material.setFloat("Metallic", 0.5f);
-        /*Roughness , 1 is the max roughnesss*/
-        material.setFloat("Roughness", 0.5f);
-        material.setFloat("EmissivePower",1.0f);
-        material.setFloat("EmissiveIntensity",2.0f);
-        material.setBoolean("HorizonFade",true);
-        material.setVector3("LightDir",new Vector3f(-0.5f,-0.5f,-0.5f).normalize());
-        material.setBoolean("BackfaceShadows",true);
-        /*Reflection color*/
-        material.setColor("Specular", ColorRGBA.Cyan.mult(3.5f));
-        Texture texture=app.getAssetManager().loadTexture("assets/Textures/dataBaseTexture.jpg");
-        material.setTexture("BaseColorMap",texture);
-        material.setReceivesShadows(true);
-        dataBaseStack.setMaterial(material);
+        humanoid.setLocalScale(1f);
+        humanoid.setName("Humanoid");
 
-        app.getCamera().setFrustumNear(0.7f);
-        ChaseCamera chaseCamera = new ChaseCamera(app.getCamera(), dataBaseStack, app.getInputManager());
+        ChaseCamera chaseCamera = new ChaseCamera(app.getCamera(), humanoid.getChild("rt-knee-joint"), app.getInputManager());
         chaseCamera.setDragToRotate(true);
         chaseCamera.setSmoothMotion(true);
-        chaseCamera.setDefaultDistance(-30f);
-        chaseCamera.setMaxDistance(-10f);
+        chaseCamera.setDefaultDistance(-5f);
+        chaseCamera.setMaxDistance(-5f);
         chaseCamera.setMinDistance(-5f);
         chaseCamera.setDefaultVerticalRotation(-FastMath.QUARTER_PI/2);
         chaseCamera.setDefaultHorizontalRotation(-FastMath.HALF_PI);
         chaseCamera.setHideCursorOnRotate(true);
-        ((SimpleApplication)getApplication()).getRootNode().attachChild(dataBaseStack);
+        ((SimpleApplication)getApplication()).getRootNode().attachChild(humanoid);
 
+        CollisionShape shape = CollisionShapeFactory.createDynamicMeshShape(humanoid.getChild("rt-tibia"));
+        float mass = 0.1f;
+        RigidBodyControl legRbc = new RigidBodyControl(shape, mass);
+        humanoid.getChild("rt-tibia").addControl(legRbc);
+        PhysicsSpace physicsSpace = app.getStateManager()
+                .getState(BulletAppState.class).getPhysicsSpace();
+        legRbc.setPhysicsSpace(physicsSpace);
+        legRbc.setEnableSleep(false);
+        physicsSpace.add(legRbc);
+
+//        legRbc.applyForce(new Vector3f(0f,1f,0f), humanoid.getChild("rt-tibia").getLocalScale().divide(2f));
+//
+//        legRbc.applyForce(new Vector3f(
+//                        Vector3f.UNIT_Y.x * FastMath.cos(FastMath.PI/2f),
+//                        Vector3f.UNIT_Y.y * FastMath.sin(FastMath.PI/2f),
+//                        Vector3f.UNIT_Y.z
+//                )
+//        , humanoid.getChild("rt-tibia").getLocalScale().divide(2f));
     }
 
     @Override
@@ -78,7 +80,7 @@ public class Scene extends BaseAppState {
         timer+=tpf;
         if ( timer >= ENV_TIME ){
             if(!getStateManager().hasState(getStateManager().getState(Environment.class))){
-                getApplication().getStateManager().attach(new Environment(dataBaseStack));
+                getApplication().getStateManager().attach(new Environment(humanoid));
             }
             getApplication().getStateManager().detach(this);
         }

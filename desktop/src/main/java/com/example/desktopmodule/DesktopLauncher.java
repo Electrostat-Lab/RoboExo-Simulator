@@ -13,8 +13,10 @@ public class DesktopLauncher {
         final Game game = new Game();
 
         final AppSettings appSettings = new AppSettings(true);
+        appSettings.setSettingsDialogImage("");
 
         game.setSettings(appSettings);
+
         game.setShowSettings(true);
         game.start();
     }

@@ -1,7 +1,6 @@
-# Cross-platform-template 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/09d937b3dd2549aea7e304aedc050764)](https://www.codacy.com/gh/Monkey-Droid/CrossPlatformModule/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Monkey-Droid/CrossPlatformModule&amp;utm_campaign=Badge_Grade)
+# RoboJoint Simulator
 
-A cross platform template for jMonkeyEngine games supporting both common-platform and platform-specific environment using gradle sub-projects.
+A cross platform simulator for RoboJoint SDK and RoboExo Projects. The simulator is powered by algorithms for 3D vector projection and rotation kinematics.
 
 # Modules: 
 1) Game module `:game` : holds `build.gradle` dependencies for the game code & should hold your code.
@@ -52,7 +51,6 @@ $./gradlew :desktop:clean &&
  ./gradlew :desktop:copyJars && 
  ./gradlew :desktop:releaseJar 
 ```
-![](https://github.com/Scrappers-glitch/CrossPlatformModule/blob/master/screenshots/desktop/Screenshot%20at%202021-10-25%2000-08-45.png)
 
 ### Android: 
 ```gradle
@@ -60,15 +58,8 @@ $./gradlew :android:clean &&
  ./gradlew :android:build && 
  ./gradlew :android:assemble
 ```
-![](https://github.com/Scrappers-glitch/CrossPlatformModule/blob/master/screenshots/android/Screenshot_20211025-000113671.jpg)
 
-![](https://github.com/Scrappers-glitch/CrossPlatformModule/blob/master/screenshots/android/Screenshot_20211025-000108283.jpg)
-
-## Appendix: 
-
-### Credits: 
-=> Thanks [Ali_RS](https://hub.jmonkeyengine.org/u/ali_rs/summary) for the suggestion of separating game and game-assets module from desktop and android ones. <br/>
-=> Thanks [wizzardo](https://hub.jmonkeyengine.org/u/wizzardo/summary) for fixing creating jar from desktop issue. <br/>
+## Appendix:
 
 ### References: 
 

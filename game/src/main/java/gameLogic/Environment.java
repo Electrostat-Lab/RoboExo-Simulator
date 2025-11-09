@@ -74,10 +74,11 @@ public class Environment extends BaseAppState {
         pointLight.setRadius(2000);
         dataBaseStack.getParent().addLight(pointLight);
 
-//        BloomFilter bloomFilter=new BloomFilter();
-//        FilterPostProcessor filterPostProcessor=new FilterPostProcessor(app.getAssetManager());
-//        filterPostProcessor.addFilter(bloomFilter);
-//        app.getViewPort().addProcessor(filterPostProcessor);
+        BloomFilter bloomFilter = new BloomFilter();
+        FilterPostProcessor filterPostProcessor=new FilterPostProcessor(app.getAssetManager());
+        bloomFilter.setBloomIntensity(0.3f);
+        filterPostProcessor.addFilter(bloomFilter);
+        app.getViewPort().addProcessor(filterPostProcessor);
 
         Geometry sky = (Geometry) SkyFactory.createSky(app.getAssetManager(),
                 app.getAssetManager().loadTexture("assets/Textures/sky.jpg"),Vector3f.UNIT_XYZ, SkyFactory.EnvMapType.EquirectMap);
